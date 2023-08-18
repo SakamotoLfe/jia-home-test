@@ -12,7 +12,7 @@
 
 	<groupId>com.jia</groupId>
 	<artifactId>jia-loan-projections</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>BETA-1.0</version>
 	<name>Jia Loan Projections</name>
 	<description>Project to project loans</description>
 
@@ -28,6 +28,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -51,6 +55,13 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.1.0</version>
+		</dependency>
+
+		<!-- LOMBOK -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.26</version>
 		</dependency>
 	</dependencies>
 

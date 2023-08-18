@@ -1,8 +1,8 @@
 package com.jia.loan.projections.config;
 
-import com.annerd.commons.utilities.exception.RestRequestException;
-import com.annerd.findme.exception.AuthorizationException;
-import com.annerd.findme.exception.FindMePlanLimitationException;
+import com.jia.loan.projections.exception.LoanBadRequestException;
+import com.jia.loan.projections.exception.LoanDateLimitException;
+import com.jia.loan.projections.exception.LoanNotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,8 +36,20 @@ public class WebRestControllerAdvisor extends OncePerRequestFilter {
      * @return Exception to be returned.
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(RestRequestException.class)
-    public RestRequestException handleRestRequestException(RestRequestException e) {
+    @ExceptionHandler(LoanBadRequestException.class)
+    public LoanBadRequestException handleRestRequestException(LoanBadRequestException e) {
+        return e;
+    }
+
+    /**
+     * Handler that will handle Rest Request Exceptions.
+     *
+     * @param e Exception thrown.
+     * @return Exception to be returned.
+     */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(LoanNotFoundException.class)
+    public LoanNotFoundException handleRestRequestException(LoanNotFoundException e) {
         return e;
     }
 
@@ -47,23 +59,12 @@ public class WebRestControllerAdvisor extends OncePerRequestFilter {
      * @param e Exception thrown.
      * @return Exception to be returned.
      */
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(AuthorizationException.class)
-    public AuthorizationException handleAuthorizationException(AuthorizationException e) {
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(LoanDateLimitException.class)
+    public LoanDateLimitException handleAuthorizationException(LoanDateLimitException e) {
         return e;
     }
 
-    /**
-     * Handler that will handle Coupler Plan Limitations Exceptions.
-     *
-     * @param e Exception thrown.
-     * @return Exception to be returned.
-     */
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(FindMePlanLimitationException.class)
-    public FindMePlanLimitationException handleCouplerPlanLimitationException(FindMePlanLimitationException e) {
-        return e;
-    }
 
     /**
      * Method that filter the requests and handle the operation.

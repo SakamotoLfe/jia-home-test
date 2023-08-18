@@ -11,8 +11,8 @@ import java.util.UUID;
  *
  * @author Alfredo marin
  * @version BETA-1.0
- * @since 2023-08-18
  * @see Loan
+ * @since 2023-08-18
  */
 
 @Repository

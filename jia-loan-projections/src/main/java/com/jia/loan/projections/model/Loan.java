@@ -1,5 +1,6 @@
 package com.jia.loan.projections.model;
 
+import com.jia.loan.projections.indicator.LoanTypeIndicator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,9 +37,14 @@ public class Loan {
     private UUID id;
 
     /**
-     * Loan's duration in weeks.
+     * Loan's duration.
      */
     private Integer loanDuration;
+
+    /**
+     * Loan's duration type.
+     */
+    private LoanTypeIndicator loanTypeIndicator;
 
     /**
      * Loan's start date.
@@ -75,18 +81,20 @@ public class Loan {
     /**
      * Constructor with all params.
      *
-     * @param id            Loan's ID.
-     * @param loanDuration  Loan's duration in weeks.
-     * @param loanStartDate Loan's start date.
-     * @param loanAmount    Loan amount
-     * @param lastUpdated   Last time the loan entity was updated.
-     * @param createDate    Date when the loan entry was created.
-     * @param enabled       If the loan entry is enabled or not.
+     * @param id                Loan's ID.
+     * @param loanDuration      Loan's duration in weeks.
+     * @param loanTypeIndicator Loan's duration type.
+     * @param loanStartDate     Loan's start date.
+     * @param loanAmount        Loan amount
+     * @param lastUpdated       Last time the loan entity was updated.
+     * @param createDate        Date when the loan entry was created.
+     * @param enabled           If the loan entry is enabled or not.
      */
-    public Loan(UUID id, Integer loanDuration, Date loanStartDate, BigDecimal loanAmount, Date lastUpdated,
-                Date createDate, boolean enabled) {
+    public Loan(UUID id, Integer loanDuration, LoanTypeIndicator loanTypeIndicator, Date loanStartDate,
+                BigDecimal loanAmount, Date lastUpdated, Date createDate, boolean enabled) {
         this.id = id;
         this.loanDuration = loanDuration;
+        this.loanTypeIndicator = loanTypeIndicator;
         this.loanStartDate = loanStartDate;
         this.loanAmount = loanAmount;
         this.lastUpdated = lastUpdated;
@@ -109,13 +117,15 @@ public class Loan {
         if (o == null || getClass() != o.getClass()) return false;
         Loan loan = (Loan) o;
         return enabled == loan.enabled && Objects.equals(id, loan.id) && Objects.equals(loanDuration, loan.loanDuration)
-                && Objects.equals(loanStartDate, loan.loanStartDate) && Objects.equals(loanAmount, loan.loanAmount)
-                && Objects.equals(lastUpdated, loan.lastUpdated) && Objects.equals(createDate, loan.createDate);
+                && loanTypeIndicator == loan.loanTypeIndicator && Objects.equals(loanStartDate, loan.loanStartDate)
+                && Objects.equals(loanAmount, loan.loanAmount) && Objects.equals(lastUpdated, loan.lastUpdated)
+                && Objects.equals(createDate, loan.createDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, loanDuration, loanStartDate, loanAmount, lastUpdated, createDate, enabled);
+        return Objects.hash(id, loanDuration, loanTypeIndicator, loanStartDate, loanAmount, lastUpdated, createDate,
+                enabled);
     }
 
     /* Getters and Setters */
@@ -134,6 +144,14 @@ public class Loan {
 
     public void setLoanDuration(Integer loanDuration) {
         this.loanDuration = loanDuration;
+    }
+
+    public LoanTypeIndicator getLoanTypeIndicator() {
+        return loanTypeIndicator;
+    }
+
+    public void setLoanTypeIndicator(LoanTypeIndicator loanTypeIndicator) {
+        this.loanTypeIndicator = loanTypeIndicator;
     }
 
     public Date getLoanStartDate() {
@@ -208,6 +226,7 @@ public class Loan {
         return "Loan{" +
                 "id=" + id +
                 ", loanDuration=" + loanDuration +
+                ", loanTypeIndicator=" + loanTypeIndicator +
                 ", loanStartDate=" + loanStartDate +
                 ", loanAmount=" + loanAmount +
                 ", lastUpdated=" + lastUpdated +
