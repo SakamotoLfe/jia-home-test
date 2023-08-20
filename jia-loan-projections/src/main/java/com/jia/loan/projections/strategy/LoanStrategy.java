@@ -2,6 +2,7 @@ package com.jia.loan.projections.strategy;
 
 import com.jia.loan.projections.dto.LoanResponseDTO;
 import com.jia.loan.projections.exception.LoanDateLimitException;
+import com.jia.loan.projections.exception.LoanNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -33,7 +34,7 @@ public interface LoanStrategy {
      * @param duration of the loan.
      * @return {@link Set<LoanResponseDTO>} with the calculated fees.
      */
-    Set<LoanResponseDTO> calculateFee(BigDecimal amount, Date date, Integer duration);
+    Set<LoanResponseDTO> calculateFee(BigDecimal amount, Date date, Integer duration) throws LoanNotFoundException;
 
     /**
      * Method that will calculate the installment.
@@ -43,7 +44,7 @@ public interface LoanStrategy {
      * @param duration of the loan.
      * @return {@link Set<LoanResponseDTO>} with the calculated installments.
      */
-    Set<LoanResponseDTO> calculateInstallment(BigDecimal amount, Date date, Integer duration);
+    Set<LoanResponseDTO> calculateInstallment(BigDecimal amount, Date date, Integer duration) throws LoanNotFoundException;
 
 
 }

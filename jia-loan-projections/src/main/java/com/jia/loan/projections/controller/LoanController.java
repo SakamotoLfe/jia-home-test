@@ -4,6 +4,7 @@ import com.jia.loan.projections.dto.LoanRequestDTO;
 import com.jia.loan.projections.dto.LoanResponseDTO;
 import com.jia.loan.projections.exception.LoanBadRequestException;
 import com.jia.loan.projections.exception.LoanDateLimitException;
+import com.jia.loan.projections.exception.LoanNotFoundException;
 import com.jia.loan.projections.indicator.ErrorIndicator;
 import com.jia.loan.projections.indicator.LoanTypeIndicator;
 import com.jia.loan.projections.service.LoanService;
@@ -47,7 +48,7 @@ public class LoanController {
      * @throws LoanDateLimitException  will be thrown if the duration is not in the supported range.
      */
     @PostMapping("/fee-projections")
-    public Set<LoanResponseDTO> feeProjections(@RequestBody LoanRequestDTO loanRequestDTO) throws LoanBadRequestException, LoanDateLimitException {
+    public Set<LoanResponseDTO> feeProjections(@RequestBody LoanRequestDTO loanRequestDTO) throws LoanBadRequestException, LoanDateLimitException, LoanNotFoundException {
         if (LoanTypeIndicator.WEEKLY.equals(loanRequestDTO.getLoanTypeIndicator())) {
             return loanService.calculateWeeklyFee(loanRequestDTO);
         } else if (LoanTypeIndicator.MONTHLY.equals(loanRequestDTO.getLoanTypeIndicator())) {
@@ -66,7 +67,7 @@ public class LoanController {
      * @throws LoanDateLimitException  will be thrown if the duration is not in the supported range.
      */
     @PostMapping("/installment-projections")
-    public Set<LoanResponseDTO> installmentProjections(@RequestBody LoanRequestDTO loanRequestDTO) throws LoanDateLimitException, LoanBadRequestException {
+    public Set<LoanResponseDTO> installmentProjections(@RequestBody LoanRequestDTO loanRequestDTO) throws LoanDateLimitException, LoanBadRequestException, LoanNotFoundException {
         if (LoanTypeIndicator.WEEKLY.equals(loanRequestDTO.getLoanTypeIndicator())) {
             return loanService.calculateWeeklyInstallment(loanRequestDTO);
         } else if (LoanTypeIndicator.MONTHLY.equals(loanRequestDTO.getLoanTypeIndicator())) {

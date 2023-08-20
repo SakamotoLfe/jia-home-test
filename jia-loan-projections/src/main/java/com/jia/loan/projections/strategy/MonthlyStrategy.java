@@ -2,6 +2,7 @@ package com.jia.loan.projections.strategy;
 
 import com.jia.loan.projections.dto.LoanResponseDTO;
 import com.jia.loan.projections.exception.LoanDateLimitException;
+import com.jia.loan.projections.exception.LoanNotFoundException;
 import com.jia.loan.projections.indicator.ErrorIndicator;
 import com.jia.loan.projections.indicator.LoanTypeIndicator;
 import org.springframework.stereotype.Component;
@@ -55,7 +56,8 @@ public class MonthlyStrategy implements LoanStrategy {
      * @return {@link Set<LoanResponseDTO>} with the calculated fees.
      */
     @Override
-    public Set<LoanResponseDTO> calculateFee(BigDecimal amount, Date date, Integer duration) {
+    public Set<LoanResponseDTO> calculateFee(BigDecimal amount, Date date, Integer duration) throws LoanNotFoundException {
+        checkData(amount, date, duration);
         Set<LoanResponseDTO> response = new HashSet<>();
         BigDecimal onePercentValue = amount.divide(ONE_HUNDRED, RoundingMode.CEILING);
         var calendar = Calendar.getInstance();
@@ -84,7 +86,8 @@ public class MonthlyStrategy implements LoanStrategy {
      * @return {@link Set<LoanResponseDTO>} with the calculated installments.
      */
     @Override
-    public Set<LoanResponseDTO> calculateInstallment(BigDecimal amount, Date date, Integer duration) {
+    public Set<LoanResponseDTO> calculateInstallment(BigDecimal amount, Date date, Integer duration) throws LoanNotFoundException {
+        checkData(amount, date, duration);
         Set<LoanResponseDTO> toProcess = calculateFee(amount, date, duration);
         Set<LoanResponseDTO> response = new HashSet<>();
         toProcess.forEach(loanResponseDTO -> {
@@ -105,5 +108,19 @@ public class MonthlyStrategy implements LoanStrategy {
             response.add(loanResponseDTO);
         });
         return response;
+    }
+
+    /**
+     * Method created to check if any field is null.
+     *
+     * @param amount   to be checked.
+     * @param date     that will start the installment process to be checked.
+     * @param duration of the loan to be checked.
+     * @throws LoanNotFoundException will be thrown if any field is null.
+     */
+    private void checkData(BigDecimal amount, Date date, Integer duration) throws LoanNotFoundException {
+        if (amount == null || date == null || duration == null) {
+            throw new LoanNotFoundException(ErrorIndicator.JLP_NF_01.getMessage());
+        }
     }
 }

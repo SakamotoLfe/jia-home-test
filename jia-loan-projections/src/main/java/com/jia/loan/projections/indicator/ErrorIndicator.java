@@ -20,6 +20,11 @@ public enum ErrorIndicator {
     JLP_DL_01("The API doesn't support the loan duration received, please use the supported amount (1-4 weeks or 1-12 months)."),
 
     /**
+     * Not Found errors.
+     */
+    JLP_NF_01("The API received invalid data to process! Check the data passed on the Strategy!"),
+
+    /**
      * Bad Request errors.
      */
     JLP_BR_01("The loan type received is not valid!"),

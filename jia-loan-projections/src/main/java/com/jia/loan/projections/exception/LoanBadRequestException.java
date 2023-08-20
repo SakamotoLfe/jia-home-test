@@ -13,17 +13,14 @@ import java.io.IOException;
 public class LoanBadRequestException extends IOException {
 
     /**
-     * Message of the exception.
-     */
-    private final String message;
-
-    /**
      * Constructor.
      *
      * @param message Message of the exception.
      */
     public LoanBadRequestException(String message) {
         super(message);
-        this.message = message;
+        /**
+         * Message of the exception.
+         */
     }
 }

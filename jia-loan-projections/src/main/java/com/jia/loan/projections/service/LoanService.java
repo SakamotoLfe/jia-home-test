@@ -3,6 +3,7 @@ package com.jia.loan.projections.service;
 import com.jia.loan.projections.dto.LoanRequestDTO;
 import com.jia.loan.projections.dto.LoanResponseDTO;
 import com.jia.loan.projections.exception.LoanDateLimitException;
+import com.jia.loan.projections.exception.LoanNotFoundException;
 import com.jia.loan.projections.strategy.MonthlyStrategy;
 import com.jia.loan.projections.strategy.WeeklyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class LoanService {
      * @throws LoanDateLimitException will be thrown if
      *                                the duration is not supported.
      */
-    public Set<LoanResponseDTO> calculateWeeklyFee(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException {
+    public Set<LoanResponseDTO> calculateWeeklyFee(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException, LoanNotFoundException {
         verifyWeeklyLimit(loanRequestDTO.getLoanDuration());
         return weeklyStrategy.calculateFee(loanRequestDTO.getAmount(), loanRequestDTO.getStartDate(), loanRequestDTO.getLoanDuration());
     }
@@ -62,7 +63,7 @@ public class LoanService {
      * @throws LoanDateLimitException will be thrown if
      *                                the duration is not supported.
      */
-    public Set<LoanResponseDTO> calculateMonthlyFee(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException {
+    public Set<LoanResponseDTO> calculateMonthlyFee(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException, LoanNotFoundException {
         verifyMonthlyLimit(loanRequestDTO.getLoanDuration());
         return monthlyStrategy.calculateFee(loanRequestDTO.getAmount(), loanRequestDTO.getStartDate(), loanRequestDTO.getLoanDuration());
     }
@@ -75,7 +76,7 @@ public class LoanService {
      * @throws LoanDateLimitException will be thrown if
      *                                the duration is not supported.
      */
-    public Set<LoanResponseDTO> calculateWeeklyInstallment(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException {
+    public Set<LoanResponseDTO> calculateWeeklyInstallment(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException, LoanNotFoundException {
         verifyWeeklyLimit(loanRequestDTO.getLoanDuration());
         return weeklyStrategy.calculateInstallment(loanRequestDTO.getAmount(), loanRequestDTO.getStartDate(), loanRequestDTO.getLoanDuration());
     }
@@ -88,7 +89,7 @@ public class LoanService {
      * @throws LoanDateLimitException will be thrown if
      *                                the duration is not supported.
      */
-    public Set<LoanResponseDTO> calculateMonthlyInstallment(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException {
+    public Set<LoanResponseDTO> calculateMonthlyInstallment(LoanRequestDTO loanRequestDTO) throws LoanDateLimitException, LoanNotFoundException {
         verifyMonthlyLimit(loanRequestDTO.getLoanDuration());
         return monthlyStrategy.calculateInstallment(loanRequestDTO.getAmount(), loanRequestDTO.getStartDate(), loanRequestDTO.getLoanDuration());
     }

@@ -37,7 +37,7 @@ public class WebRestControllerAdvisor extends OncePerRequestFilter {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(LoanBadRequestException.class)
-    public LoanBadRequestException handleRestRequestException(LoanBadRequestException e) {
+    public LoanBadRequestException handleLoanBadRequestException(LoanBadRequestException e) {
         return e;
     }
 
@@ -49,7 +49,7 @@ public class WebRestControllerAdvisor extends OncePerRequestFilter {
      */
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(LoanNotFoundException.class)
-    public LoanNotFoundException handleRestRequestException(LoanNotFoundException e) {
+    public LoanNotFoundException handleLoanNotFoundException(LoanNotFoundException e) {
         return e;
     }
 
@@ -61,7 +61,7 @@ public class WebRestControllerAdvisor extends OncePerRequestFilter {
      */
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(LoanDateLimitException.class)
-    public LoanDateLimitException handleAuthorizationException(LoanDateLimitException e) {
+    public LoanDateLimitException handleLoanDateLimitException(LoanDateLimitException e) {
         return e;
     }
 
