@@ -1,0 +1,7 @@
+com\jia\loan\projections\controller\LoanControllerTest.class
+com\jia\loan\projections\config\WebRestControllerAdvisorTest.class
+com\jia\loan\projections\strategy\WeeklyStrategyTest.class
+com\jia\loan\projections\dto\LoanRequestDTOTest.class
+com\jia\loan\projections\strategy\MonthlyStrategyTest.class
+com\jia\loan\projections\dto\LoanResponseDTOTest.class
+com\jia\loan\projections\service\LoanServiceTest.class
